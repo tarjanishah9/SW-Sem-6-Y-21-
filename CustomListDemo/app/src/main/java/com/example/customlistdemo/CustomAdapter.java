@@ -7,22 +7,24 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+
 public class CustomAdapter extends BaseAdapter {
-    int[] imgArr;
-    String[] strMain;
-    String[] strSub;
+    ArrayList<Integer> imgArr;
+    ArrayList<String> mainArr;
+    ArrayList<String> subArr;
     MainActivity activity;
 
-    public CustomAdapter(MainActivity activity,int[] imgArr, String[] strMain, String[] strSub) {
-        this.activity=activity;
+    public CustomAdapter(MainActivity activity,ArrayList<Integer> imgArr, ArrayList<String> mainArr, ArrayList<String> subArr) {
         this.imgArr = imgArr;
-        this.strMain = strMain;
-        this.strSub = strSub;
+        this.mainArr = mainArr;
+        this.subArr = subArr;
+        this.activity = activity;
     }
 
     @Override
     public int getCount() {
-        return imgArr.length;
+        return imgArr.size();
     }
 
     @Override
@@ -37,13 +39,22 @@ public class CustomAdapter extends BaseAdapter {
 
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
-        View v= LayoutInflater.from(activity).inflate(R.layout.list_row,null);
+        View v;
+        if(i%2==0) {
+
+            v = LayoutInflater.from(activity).inflate(R.layout.list_row, null);
+        }
+        else
+        {
+            v=LayoutInflater.from(activity).inflate(R.layout.list_row_right,null);
+        }
         ImageView imgData=v.findViewById(R.id.imgData);
         TextView txtMain=v.findViewById(R.id.txtMain);
         TextView txtSub=v.findViewById(R.id.txtSub);
-        imgData.setImageResource(imgArr[i]);
-        txtMain.setText(strMain[i]);
-        txtSub.setText(strSub[i]);
+        imgData.setImageResource(imgArr.get(i));
+        txtMain.setText(mainArr.get(i));
+        txtSub.setText(subArr.get(i));
+
         return v;
     }
 }
