@@ -1,8 +1,12 @@
 package com.example.customlistdemo;
 
+import android.app.Dialog;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -54,6 +58,23 @@ public class CustomAdapter extends BaseAdapter {
         imgData.setImageResource(imgArr.get(i));
         txtMain.setText(mainArr.get(i));
         txtSub.setText(subArr.get(i));
+
+        imgData.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Dialog dialog=new Dialog(activity);
+                dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                dialog.setContentView(R.layout.dialog_layout);
+                dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+//             /   dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                dialog.setCancelable(false);
+                ImageView imgData=dialog.findViewById(R.id.imgData);
+                TextView txtName=dialog.findViewById(R.id.txtName);
+                imgData.setImageResource(imgArr.get(i));
+                txtName.setText(mainArr.get(i));
+                dialog.show();
+            }
+        });
 
         return v;
     }
