@@ -1,18 +1,32 @@
 package com.example.databasedemo;
 
+import android.annotation.SuppressLint;
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
 import androidx.annotation.Nullable;
 
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class DBHelper extends SQLiteOpenHelper {
-    String createPerson="CREATE TABLE tbPerson" +
-            "(pid integer primary key autoincrement,fname varchar(20),lname varchar(20),email varchar(20),password varchar(20))";
+    public static final  String TB_NAME="tbPerson";
+    public static final  String TB_PER_PID="pid";
+    public static final  String TB_PER_FNAME="fname";
+    public static final  String TB_PER_LNAME="lname";
+    public static final  String TB_PER_EMAIL="email";
+    public static final  String TB_PER_PASS="password";
+    String createPerson="CREATE TABLE " +TB_NAME +
+            "("+TB_PER_PID +" integer primary key autoincrement," +
+            TB_PER_FNAME +" varchar(20)," +
+            TB_PER_LNAME+" varchar(20)," +
+            TB_PER_EMAIL+" varchar(20)," +
+            TB_PER_PASS+" varchar(20))";
 
     public DBHelper(@Nullable Context context,
                     @Nullable String name, @Nullable SQLiteDatabase.CursorFactory factory, int version) {
@@ -31,16 +45,36 @@ public class DBHelper extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
 
     }
-    public long addData(String fname, String lname, String email, String pass){
+    public long addData(Person p){
         SQLiteDatabase db=this.getWritableDatabase();
         ContentValues cv=new ContentValues();
 
-        cv.put("fname",fname);
-        cv.put("lname",lname);
-        cv.put("email",email);
-        cv.put("password",pass);
-        long row=db.insert("tbPerson",null,cv);
+        cv.put(TB_PER_FNAME,p.getFname());
+        cv.put(TB_PER_LNAME,p.getLname());
+        cv.put(TB_PER_EMAIL,p.getEmail());
+        cv.put(TB_PER_PASS,p.getPass());
+        long row=db.insert(TB_NAME,null,cv);
         db.close();
         return row;
+    }
+    @SuppressLint("Range")
+    public List<Person> getData(){
+        SQLiteDatabase db=this.getReadableDatabase();
+        String sql="SELECT * FROM "+TB_NAME;
+        Person p=null;
+        List<Person> personList=new ArrayList<>();
+        Cursor cursor=db.rawQuery(sql,null);
+        if(cursor.getCount()>0){
+            while (cursor.moveToNext()){
+                String fname=cursor.getString(cursor.getColumnIndex(TB_PER_FNAME));
+                String lname=cursor.getString(cursor.getColumnIndex(TB_PER_LNAME));
+                String email=cursor.getString(cursor.getColumnIndex(TB_PER_EMAIL));
+                String pass=cursor.getString(cursor.getColumnIndex(TB_PER_PASS));
+                p=new Person(fname,lname,email,pass);
+                personList.add(p);
+            }
+        }
+        return personList;
+
     }
 }
