@@ -3,10 +3,15 @@ package com.example.databasedemo;
 public class Person {
     private int pId;
     private String fname,lname,email,pass;
-
+    public Person(){}
     public Person(String fname, String lname, String email, String pass) {
         this.fname = fname;
         this.lname = lname;
+        this.email = email;
+        this.pass = pass;
+    }
+
+    public Person(String email, String pass) {
         this.email = email;
         this.pass = pass;
     }

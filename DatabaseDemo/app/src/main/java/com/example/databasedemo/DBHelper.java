@@ -3,6 +3,7 @@ package com.example.databasedemo;
 import android.annotation.SuppressLint;
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
@@ -76,5 +77,28 @@ public class DBHelper extends SQLiteOpenHelper {
         }
         return personList;
 
+    }
+    @SuppressLint("Range")
+    public Person checkUser(Person p){
+        SQLiteDatabase db=this.getReadableDatabase();
+
+        Person per=null;
+        String sql="SELECT * FROM "+ TB_NAME +" WHERE "+TB_PER_EMAIL +"='"+p.getEmail()+"'";
+        Cursor c=db.rawQuery(sql,null);
+        if(c.getCount()>0){
+            c.moveToFirst();
+             String pass=c.getString(c.getColumnIndex(TB_PER_PASS));
+             if(pass.equals(p.getPass())){
+                 per=new Person();
+                 int id=c.getInt(c.getColumnIndex(TB_PER_PID));
+                 String fName=c.getString(c.getColumnIndex(TB_PER_FNAME));
+                 per.setFname(fName);
+                 per.setpId(id);
+                 per.setEmail(p.getEmail());
+
+             }
+
+        }
+        return per;
     }
 }
