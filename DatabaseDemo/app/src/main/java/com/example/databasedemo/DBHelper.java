@@ -92,7 +92,9 @@ public class DBHelper extends SQLiteOpenHelper {
                  per=new Person();
                  int id=c.getInt(c.getColumnIndex(TB_PER_PID));
                  String fName=c.getString(c.getColumnIndex(TB_PER_FNAME));
+                 String lName=c.getString(c.getColumnIndex(TB_PER_LNAME));
                  per.setFname(fName);
+                 per.setLname(lName);
                  per.setpId(id);
                  per.setEmail(p.getEmail());
 
@@ -100,5 +102,13 @@ public class DBHelper extends SQLiteOpenHelper {
 
         }
         return per;
+    }
+    public int updateData(Person p){
+        SQLiteDatabase db=this.getWritableDatabase();
+        ContentValues cv=new ContentValues();
+        cv.put(TB_PER_FNAME,p.getFname());
+        cv.put(TB_PER_LNAME,p.getLname());
+        int row=db.update(TB_NAME,cv,TB_PER_PID + "=?",new String[]{String.valueOf(p.getpId())});
+        return row;
     }
 }
