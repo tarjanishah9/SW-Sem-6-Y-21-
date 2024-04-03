@@ -108,7 +108,13 @@ public class DBHelper extends SQLiteOpenHelper {
         ContentValues cv=new ContentValues();
         cv.put(TB_PER_FNAME,p.getFname());
         cv.put(TB_PER_LNAME,p.getLname());
-        int row=db.update(TB_NAME,cv,TB_PER_PID + "=?",new String[]{String.valueOf(p.getpId())});
+        int row=db.update(TB_NAME,cv,TB_PER_PID + "=? AND "+TB_PER_EMAIL+"=?"
+                ,new String[]{String.valueOf(p.getpId()),p.getEmail()});
+        return row;
+    }
+    public int deleteData(int id){
+        SQLiteDatabase db=this.getWritableDatabase();
+        int row=db.delete(TB_NAME,TB_PER_PID + "=?",new String[]{String.valueOf(id)});
         return row;
     }
 }

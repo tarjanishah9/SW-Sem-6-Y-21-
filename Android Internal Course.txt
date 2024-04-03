@@ -1,0 +1,16 @@
+Introduction to Android
+History and Architecture
+Android App Components
+Activity Lifecycle
+Creating an app
+Layout(Constraint, Linear,Frame)
+TextView,Edittext,Button,Spinner, Autocomplete TextView,GridView,ListView,Checkbox,Radio Button.
+Alert Dialog,Image View,Timepicker Dialog,Date Picker Dialog,Custom Dialog
+Custom List/Grid View
+
+Localization
+Intent
+Shared Preferences
+CURD
+
+
