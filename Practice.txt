@@ -1,0 +1,11 @@
+1)For Image P1:
+Create a form like given Image.
+Save all the data into databse.
+After saving data page should be redirected to next page which will have a listview to show all the student details.
+After clicking on a listview user can update data.
+On Long click of listview user can delete that particular data.
+
+2)For Image P2:
+Create a form like given Image.
+Save all data into shared preferences.
+And show those data in next page.
